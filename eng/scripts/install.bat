@@ -13,12 +13,11 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+echo Uninstalling any existing version of Spec CLI...
+dotnet tool uninstall --global %PACKAGE_ID% 2>nul
+
 echo Installing Spec CLI as a global tool...
-dotnet tool install --global --add-source "%NUPKG_DIR%" %PACKAGE_ID% 2>nul
-if %errorlevel% neq 0 (
-    echo Updating existing Spec CLI installation...
-    dotnet tool update --global --add-source "%NUPKG_DIR%" %PACKAGE_ID%
-)
+dotnet tool install --global --add-source "%NUPKG_DIR%" %PACKAGE_ID%
 
 if %errorlevel% neq 0 (
     echo ERROR: Installation failed.

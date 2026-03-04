@@ -30,7 +30,7 @@ dotnet tool update --global QuinntyneBrown.Spec.Cli
 spec-cli install
 ```
 
-This creates `.claude/skills/spec.md` in the current directory.
+This creates `.claude/skills/spec/SKILL.md` in the current directory.
 
 ## Development
 

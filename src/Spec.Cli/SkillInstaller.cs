@@ -21,12 +21,21 @@ public class SkillInstaller : ISkillInstaller
     private const string SkillContent = """
         ---
         name: spec
-        description: When asked to do any kind of code generation, follow the Spec process to generate requirements and implement them with a team of agents.
+        description: When asked to do any kind of code generation or design work, follow the Spec process to generate requirements and implement them with a team of agents.
         ---
 
         # Spec Skill
 
-        When asked to do any kind of code generation, follow this process:
+        When asked to do any kind of code generation or design work, follow this process:
+
+        ## Step 0: Determine Task Type
+
+        Classify the request as one of:
+
+        - **Code** — generating, modifying, or building software (source files, tests, configs)
+        - **Design** — creating or modifying visual designs in `.pen` files (screens, layouts, components, pages)
+
+        This classification drives which workflow applies in Step 2.
 
         ## Step 1: Requirements Generation
 
@@ -37,12 +46,15 @@ public class SkillInstaller : ISkillInstaller
         3. Create `docs/specs/L2.md` containing detailed requirements that trace to L1 requirements
            - Each L2 requirement traces to exactly one L1 requirement via its identifier
            - Each L2 requirement includes acceptance criteria defining done
+           - For design tasks, acceptance criteria should describe visual and structural outcomes rather than automated test assertions
 
         ## Step 2: Team-Based Implementation Process
 
         For each L1 requirement, create a team of agents:
 
-        ### Implementor Agent
+        ### Code Tasks
+
+        #### Implementor Agent
 
         Implement the L1 requirement:
 
@@ -50,13 +62,36 @@ public class SkillInstaller : ISkillInstaller
         - Create a failing acceptance test for each acceptance criteria for the L2 requirement
         - Implement the minimal code to make the acceptance test pass
 
-        ### Quality Assurance Agent
+        #### Quality Assurance Agent
 
         For each completed L2 requirement marked as complete:
 
         - Verify the implementation is complete — no TODOs or placeholder code
         - Verify all acceptance tests pass
         - Mark the L2 as verified, or reject it with feedback so the Implementor can fix
+
+        ### Design Tasks
+
+        #### Implementor Agent
+
+        Implement the L1 requirement in the `.pen` file:
+
+        - Systematically implement each L2 requirement for the assigned L1 using the Pencil MCP tools and then mark as complete
+        - Use `get_guidelines`, `get_style_guide_tags`, and `get_style_guide` to follow proper design conventions
+        - Build the design using `batch_design` operations (insert, update, copy, replace, etc.)
+        - Take a screenshot with `get_screenshot` after completing each L2 to visually confirm the result
+
+        #### Quality Assurance Agent
+
+        For each completed L2 requirement marked as complete:
+
+        - Use `get_screenshot` to visually inspect the design
+        - Use `batch_get` and `snapshot_layout` to verify structural correctness (layout, spacing, hierarchy)
+        - Verify all acceptance criteria are met by visual and structural inspection
+        - Verify there are no layout problems (overlapping elements, clipped content, misalignment)
+        - Mark the L2 as verified, or reject it with specific visual/structural feedback so the Implementor can fix
+
+        Note: For design tasks, automated failing tests do not apply. Quality assurance is performed through visual inspection and structural verification instead.
 
         ### Iteration
 
