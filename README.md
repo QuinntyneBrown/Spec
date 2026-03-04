@@ -6,7 +6,7 @@ A .NET CLI tool that installs the **spec** skill into Claude Code projects, enfo
 
 ## What It Does
 
-Running `spec-cli install` creates a `.claude/skills/spec.md` file in your project. This skill guides Claude Code agents through:
+Running `spec-cli install` creates a `.claude/skills/spec/SKILL.md` file in your project. This skill guides Claude Code agents through:
 
 1. **Requirements documentation** — L1 (high-level) and L2 (detailed) specs are created before any code is written
 2. **Team-based implementation** — Implementor and QA agents work iteratively on each requirement
@@ -16,6 +16,12 @@ Running `spec-cli install` creates a `.claude/skills/spec.md` file in your proje
 
 ```bash
 dotnet tool install --global QuinntyneBrown.Spec.Cli
+```
+
+## Update
+
+```bash
+dotnet tool update --global QuinntyneBrown.Spec.Cli
 ```
 
 ## Usage
