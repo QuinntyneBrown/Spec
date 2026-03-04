@@ -40,13 +40,21 @@ public class SkillInstaller : ISkillInstaller
         ## Step 1: Requirements Generation
 
         1. Create `docs/specs` folder in the project root if it does not already exist
-        2. Create `docs/specs/L1.md` containing high-level requirements for the ask
+        2. If `docs/specs/L1.md` and `docs/specs/L2.md` already exist, read them first — you will update them rather than overwrite them
+        3. Create or update `docs/specs/L1.md` containing high-level requirements for the ask
            - L1 requirements are extreme high-level descriptions of what the system shall do
            - Each L1 requirement has a unique identifier (e.g., `L1-1`, `L1-2`)
-        3. Create `docs/specs/L2.md` containing detailed requirements that trace to L1 requirements
+           - If the file already exists, update it in place — do not recreate from scratch
+        4. Create or update `docs/specs/L2.md` containing detailed requirements that trace to L1 requirements
            - Each L2 requirement traces to exactly one L1 requirement via its identifier
            - Each L2 requirement includes acceptance criteria defining done
            - For design tasks, acceptance criteria should describe visual and structural outcomes rather than automated test assertions
+           - If the file already exists, update it in place — do not recreate from scratch
+        5. Changes to existing requirements are **append-only**:
+           - Never delete existing L1 or L2 requirements
+           - Never remove existing acceptance criteria
+           - Existing requirement text may be broadened but never narrowed
+           - New requirements and acceptance criteria may be added freely
 
         ## Step 2: Team-Based Implementation Process
 
