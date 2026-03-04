@@ -11,14 +11,19 @@ public class SkillInstaller : ISkillInstaller
 
     public void Install()
     {
-        var skillsDir = Path.Combine(_basePath, ".claude", "skills");
-        Directory.CreateDirectory(skillsDir);
+        var skillDir = Path.Combine(_basePath, ".claude", "skills", "spec");
+        Directory.CreateDirectory(skillDir);
 
-        var skillFilePath = Path.Combine(skillsDir, "spec.md");
+        var skillFilePath = Path.Combine(skillDir, "SKILL.md");
         File.WriteAllText(skillFilePath, SkillContent);
     }
 
     private const string SkillContent = """
+        ---
+        name: spec
+        description: When asked to do any kind of code generation, follow the Spec process to generate requirements and implement them with a team of agents.
+        ---
+
         # Spec Skill
 
         When asked to do any kind of code generation, follow this process:

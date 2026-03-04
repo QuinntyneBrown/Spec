@@ -94,7 +94,7 @@ public class InstallCommandTests
             var parseResult = rootCommand.Parse("install");
             await parseResult.InvokeAsync();
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             Assert.True(File.Exists(skillFilePath));
         }
         finally
@@ -135,9 +135,9 @@ public class InstallCommandTests
         Directory.CreateDirectory(tempDir);
         try
         {
-            var skillsDir = Path.Combine(tempDir, ".claude", "skills");
-            Directory.CreateDirectory(skillsDir);
-            var skillFilePath = Path.Combine(skillsDir, "spec.md");
+            var skillDir = Path.Combine(tempDir, ".claude", "skills", "spec");
+            Directory.CreateDirectory(skillDir);
+            var skillFilePath = Path.Combine(skillDir, "SKILL.md");
             await File.WriteAllTextAsync(skillFilePath, "old content");
 
             var services = new ServiceCollection();
@@ -175,7 +175,7 @@ public class InstallCommandTests
             var parseResult = rootCommand.Parse("install");
             await parseResult.InvokeAsync();
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             var content = await File.ReadAllTextAsync(skillFilePath);
 
             Assert.Contains("# Spec Skill", content);
@@ -212,7 +212,7 @@ public class InstallCommandTests
             var exitCode1 = await parseResult1.InvokeAsync();
             Assert.Equal(0, exitCode1);
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             var contentAfterFirst = await File.ReadAllTextAsync(skillFilePath);
 
             // Second run
@@ -242,7 +242,7 @@ public class InstallCommandTests
             var installer = new SkillInstaller(tempDir);
             installer.Install();
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             Assert.True(File.Exists(skillFilePath));
         }
         finally
@@ -261,11 +261,12 @@ public class InstallCommandTests
             var installer = new SkillInstaller(tempDir);
             installer.Install();
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             var content = File.ReadAllText(skillFilePath);
 
             // Verify key structural elements
-            Assert.StartsWith("# Spec Skill", content);
+            Assert.StartsWith("---", content);
+            Assert.Contains("# Spec Skill", content);
             Assert.Contains("docs/specs", content);
             Assert.Contains("L1.md", content);
             Assert.Contains("L2.md", content);

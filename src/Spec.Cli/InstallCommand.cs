@@ -16,7 +16,7 @@ public static class InstallCommand
             var installer = serviceProvider.GetRequiredService<ISkillInstaller>();
 
             installer.Install();
-            logger.LogInformation("Spec skill installed successfully to .claude/skills/spec.md");
+            logger.LogInformation("Spec skill installed successfully to .claude/skills/spec/SKILL.md");
 
             return Task.FromResult(0);
         });

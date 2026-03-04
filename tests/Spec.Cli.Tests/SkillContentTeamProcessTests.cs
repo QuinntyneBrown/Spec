@@ -11,7 +11,7 @@ public class SkillContentTeamProcessTests
             var installer = new SkillInstaller(tempDir);
             installer.Install();
 
-            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec.md");
+            var skillFilePath = Path.Combine(tempDir, ".claude", "skills", "spec", "SKILL.md");
             return File.ReadAllText(skillFilePath);
         }
         finally

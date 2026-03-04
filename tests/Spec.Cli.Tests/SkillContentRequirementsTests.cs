@@ -13,7 +13,7 @@ public class SkillContentRequirementsTests : IDisposable
         var installer = new SkillInstaller(_tempDir);
         installer.Install();
 
-        var skillFilePath = Path.Combine(_tempDir, ".claude", "skills", "spec.md");
+        var skillFilePath = Path.Combine(_tempDir, ".claude", "skills", "spec", "SKILL.md");
         _skillContent = File.ReadAllText(skillFilePath);
     }
 
